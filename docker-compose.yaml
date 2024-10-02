@@ -21,7 +21,7 @@ services:
 
   client:
     build:
-      context: ./client
+      context: ./client   #Cambiar aqui para cambiar la web
     ports:
       - "3000:3000"
     stdin_open: true
