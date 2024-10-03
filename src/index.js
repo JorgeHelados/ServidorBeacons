@@ -1,10 +1,13 @@
 import express from "express";
 import { createPool } from 'mysql2/promise';
 import { config } from 'dotenv';
+import cors from 'cors'; // Importa el paquete cors
 
 config();
 
 const app = express();
+
+app.use(cors()); // Usa el middleware cors
 
 const pool = createPool({
   host: process.env.MYSQLDB_HOST,
