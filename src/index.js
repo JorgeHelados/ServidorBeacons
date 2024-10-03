@@ -1,13 +1,14 @@
 import express from "express";
 import { createPool } from 'mysql2/promise';
 import { config } from 'dotenv';
-import cors from 'cors'; // Importa el paquete cors
+import cors from 'cors';
 
 config();
 
 const app = express();
 
-app.use(cors()); // Usa el middleware cors
+app.use(cors());
+app.use(express.json());
 
 const pool = createPool({
   host: process.env.MYSQLDB_HOST,
@@ -22,11 +23,24 @@ app.get('/ping', async (req, res) => {
   res.json(result[0]);
 });
 
-// Nuevo endpoint para obtener el último valor de la columna 'cantidad'
 app.get('/medicion', async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT cantidad FROM Mediciones ORDER BY id DESC LIMIT 1');
     res.json(rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/medicion', async (req, res) => {
+  try {
+    const { cantidad } = req.body;
+    if (cantidad === undefined) {
+      return res.status(400).json({ error: 'El campo cantidad es requerido' });
+    }
+
+    const [result] = await pool.query('INSERT INTO Mediciones (cantidad) VALUES (?)', [cantidad]);
+    res.json({ id: result.insertId, cantidad });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
