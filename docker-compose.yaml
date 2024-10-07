@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # Esta es la parte de la BBDD
   mysqldb:
     image: mysql
     env_file: ./.env
@@ -10,6 +11,7 @@ services:
     ports:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
 
+  # Esta es la parte del backend
   app:
     build: .
     depends_on:
@@ -22,6 +24,7 @@ services:
       - .:/app
     command: ["npm", "run", "dev"]
 
+  # Esta es la parte del frontend
   client:
     build:
       context: ./$WEB_NAME   #Cambiar aqui para cambiar la web

@@ -18,11 +18,13 @@ const pool = createPool({
   database: process.env.MYSQLDB_DATABASE
 });
 
+// Coge la hora actual
 app.get('/ping', async (req, res) => {
   const result = await pool.query('SELECT NOW()');
   res.json(result[0]);
 });
 
+// Coge el utimo valor añadido de la columna Mediciones
 app.get('/medicion', async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT cantidad FROM Mediciones ORDER BY id DESC LIMIT 1');
@@ -32,6 +34,7 @@ app.get('/medicion', async (req, res) => {
   }
 });
 
+// Sube el ultimo valor de la columna Mediciones
 app.post('/medicion', async (req, res) => {
   try {
     const { cantidad } = req.body;
