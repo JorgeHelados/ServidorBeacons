@@ -8,7 +8,7 @@ Este es el repositorio del backend para la aplicación **SERVIDORBEACONS**, un s
 El código fuente está organizado de la siguiente manera:
 
 
-```
+``` bash
 ├── node_modules/ # Módulos de Node.js 
 ├── src/ # Carpeta principal del código fuente 
 │ └── index.js # Punto de entrada principal del servidor 
