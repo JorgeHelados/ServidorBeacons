@@ -1,0 +1,145 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: API de Mediciones
+  description: Esta API permite obtener la hora actual del servidor, obtener la última medición y registrar nuevas mediciones.
+servers:
+  - url: http://localhost:{port}
+    description: Servidor local
+    variables:
+      port:
+        default: 3000
+        description: Puerto del servidor
+
+paths:
+  /ping:
+    get:
+      summary: Obtener la hora actual del servidor
+      description: Retorna la hora actual del servidor en formato de fecha y hora.
+      responses:
+        200:
+          description: Hora actual obtenida con éxito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    NOW():
+                      type: string
+                      example: "2023-10-07 12:34:56"
+              examples:
+                ejemploHora:
+                  summary: Ejemplo de la hora actual
+                  value:
+                    - NOW(): "2023-10-07 12:34:56"
+
+  /medicion:
+    get:
+      summary: Obtener la última medición registrada
+      description: Devuelve el último valor añadido en la columna `Mediciones`.
+      responses:
+        200:
+          description: Última medición obtenida con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cantidad:
+                    type: number
+                    example: 25.6
+              examples:
+                ejemploUltimaMedicion:
+                  summary: Ejemplo de la última medición
+                  value:
+                    cantidad: 25.6
+        500:
+          description: Error en la solicitud
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error al obtener la medición"
+
+    post:
+      summary: Registrar una nueva medición
+      description: Inserta un nuevo valor en la columna `Mediciones`.
+      requestBody:
+        description: Cuerpo de la solicitud para registrar una medición
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cantidad:
+                  type: number
+                  example: 27.8
+            examples:
+              ejemploNuevaMedicion:
+                summary: Ejemplo de nueva medición
+                value:
+                  cantidad: 27.8
+      responses:
+        200:
+          description: Medición registrada con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  cantidad:
+                    type: number
+                    example: 27.8
+              examples:
+                ejemploRespuesta:
+                  summary: Ejemplo de respuesta tras insertar una medición
+                  value:
+                    id: 1
+                    cantidad: 27.8
+        400:
+          description: Error de validación
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "El campo cantidad es requerido"
+        500:
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error al insertar la medición"
+
+components:
+  schemas:
+    Medicion:
+      type: object
+      properties:
+        cantidad:
+          type: number
+          description: Valor de la medición
+          example: 27.8
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Mensaje de error
+          example: "Error en el servidor"
+          

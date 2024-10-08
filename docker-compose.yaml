@@ -27,7 +27,7 @@ services:
   # Esta es la parte del frontend
   client:
     build:
-      context: ./$WEB_NAME   #Cambiar aqui para cambiar la web
+      context: ./src/$WEB_NAME   # Cambiar aquí para apuntar a la nueva ubicación de la web
     ports:
       - $WEB_LOCAL_PORT:$WEB_DOCKER_PORT
     stdin_open: true
