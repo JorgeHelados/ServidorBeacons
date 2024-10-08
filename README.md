@@ -104,4 +104,4 @@ npm test
 
 ## Autor
 
-Desarrollado y mantenido por **Jorge Satorres Pardo**.
+Desarrollado por **Jorge Satorres Pardo**.
