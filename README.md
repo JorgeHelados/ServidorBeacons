@@ -94,14 +94,6 @@ Nota: No uses docker-compose down ya que esto borrará la base de datos.
 La web se puede ver en http://localhost:3000.
 Los endpoints están disponibles en http://localhost:4000.
 
-## Pruebas
-
-Este proyecto está configurado para usar **Jest** para realizar pruebas unitarias. Para ejecutar las pruebas, usa el siguiente comando:
-
-```bash
-npm test
-```
-
 ## Autor
 
 Desarrollado por **Jorge Satorres Pardo**.
